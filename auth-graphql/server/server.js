@@ -9,7 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 const schema = require('./schema/schema');
 
 // Create a new Express application
-const app = express();
+const app = express(); 
 
 // Replace with your mongoLab URI
 const MONGO_URI = '';
@@ -19,7 +19,7 @@ mongoose.Promise = global.Promise;
 
 // Connect to the mongoDB instance and log a message
 // on success or failure
-mongoose.connect(MONGO_URI);
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection
     .once('open', () => console.log('Connected to MongoLab instance.'))
     .on('error', error => console.log('Error connecting to MongoLab:', error));
@@ -35,7 +35,7 @@ app.use(session({
   secret: 'aaabbbccc',
   store: new MongoStore({
     url: MONGO_URI,
-    autoReconnect: true
+    autoReconnect: true,
   })
 }));
 
